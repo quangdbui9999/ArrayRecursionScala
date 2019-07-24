@@ -1,0 +1,135 @@
+/*
+Problem: Initinitialized an array with some Integer number (Array with Integer number)
+a) Display an array
+b) Find the sum of an array
+c) Find the max, min of that array
+d) Sort array in the ascending and descending order
+
+Requirement: This problem is done completely by using RECURSION
+
+Note: 
+Parameter 'n': the length of an array
+Parameter 'array': this is an array
+Parameter 'sum': the total sum of array
+Parameter 'min': the minimum number of array
+Parameter 'max': the maximum number of array
+*/
+
+object Project3 {
+  // declare the constant for Max and Min Integer number
+	// purpose: very useful in findMax and findMin method
+  val MAX_INT: Int = 2147483647 // val is constand, cannot change value
+  val MIN_INT: Int = -2147483647
+
+  // the main function to run all the sub-function
+  def main(args: Array[String]) {
+    //declare an array name arrayInteger and initialized some number
+    val arrayInteger = Array(9,5,3,1,4,2,7,6,8)
+
+    println("Display an array:")
+    displayArray(arrayInteger, arrayInteger.length)
+
+    // Display Sum, Min, and Max of array
+    println("\nSum of array is: " + sumArray(arrayInteger, arrayInteger.length))
+    println("Min number of array is: " + findMin(arrayInteger, arrayInteger.length))
+    println("Max number of array is: " + findMax(arrayInteger, arrayInteger.length))
+
+    println("Sort array increasing:")
+    sortAscending(arrayInteger, arrayInteger.length)
+    displayArray(arrayInteger, arrayInteger.length)
+
+    println("\nSort array decreasing:")
+    sortDescending(arrayInteger, arrayInteger.length)
+    displayArray(arrayInteger, arrayInteger.length)
+    println()
+  }
+
+  // Display each element of an array
+  def displayArray(array: Array[Int], n: Int, i: Int = 0): Unit = {
+    // If the element i is running at the end of array (n) (base case)
+    if(i == n)
+      return // return array
+    else { // otherwise 
+      // print one element
+      print(array(i) + " ")
+      // call recursion this method by moving to the next element (i+1) until the end of array
+      displayArray(array, n, i + 1)
+    }
+  }
+
+  def sumArray(array: Array[Int], n: Int, i: Int = 0, sum: Int = 0): Int = {
+    // If the element i is running at the end of array (n) (base case)
+    if (i == n)
+      sum // return sum
+    else // otherwise
+    // call recursion this method by moving to the next element (i+1) and add to sum (total sum) 
+    // until the end of array
+      sumArray(array, n, i + 1, sum + array(i));
+  }
+
+  def findMin(array: Array[Int], n: Int, i: Int = 0, min: Int = MAX_INT): Int = {
+    // If the element i is running at the end of array (n) (base case)
+    if (i == n)
+      min // return min
+    else // otherwise
+    // call recursion by using moving to the next element (i+1) and compare with the min
+    // if (array(i) < min) => array(i) is the min number
+    // otherwise => min is the min number
+    // comparing until the end of array
+      findMin(array, n, i + 1, if (array(i) < min) array(i) else min)
+  }
+
+  def findMax(array: Array[Int], n: Int, i: Int = 0, max: Int = MIN_INT): Int = {
+    // If the element i is running at the end of array (n) (base case)
+    if (i == n)
+      return max // return max
+    else // otherwise
+    // call recursion by using moving to the next element (i+1) and compare with the max
+    // if (array(i) > max) => array(i) is the max number
+    // otherwise => max is the max number
+    // comparing until the end of array
+      return findMax(array, n, i + 1, if (array(i) > max) array(i) else max)
+  }
+  
+  def sortAscending(array: Array[Int], n: Int, i: Int = 0): Unit = {
+    // If the element i is running at the second last element of array (n) (base case)
+    if(i == n - 1)
+    {
+      return // return the array is sored ascending
+    }
+    // otherwise, travelling each element from the second element to second last element
+    for(k <- (i + 1) to (n - 1)){
+      // if the front element is greater than behind element
+      if(array(i) > array(k))
+      {
+        // swap two element
+        var tmp = array(i)
+      	array(i) = array(k)
+      	array(k) = tmp
+      }
+    }
+    // call recursion by moving to the next (i + 1) element until the end of array
+    sortAscending(array, n, i + 1)
+  }
+
+  def sortDescending(array: Array[Int], n: Int, i: Int = 0): Unit = {
+    // If the element i is running at the second last element of array (n) (base case)
+    if(i == n - 1)
+    {
+      return // return the array is sored descending
+    }
+    // otherwise, travelling each element from the second element to second last element
+    for(k <- (i + 1) to (n - 1)){
+      // if the front element is less than behind element
+    	if(array(i) < array(k))
+      {
+        // swap two element
+        var tmp = array(i)
+        array(i) = array(k)
+        array(k) = tmp
+      }
+    }
+    // call recursion by moving to the next (i + 1) element until the end of array
+    sortDescending(array, n, i + 1)
+  }
+}
